@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/OpenBankingUK/reference-mock-server.svg?style=svg)](https://circleci.com/gh/OpenBankingUK/reference-mock-server)
+
 # Reference Mock Server
 
 Reference mock server implemented using
@@ -64,7 +66,7 @@ docker-compose up
 
 ### Installation on Local Machine
 
-We assume [NodeJS](https://nodejs.org/en/) ver8.4+ is installed.
+We assume [NodeJS](https://nodejs.org/en/) LTS is installed.
 
 Install npm packages:
 
