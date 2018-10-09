@@ -1,7 +1,7 @@
 const express = require('express');
 const assert = require('assert');
 const request = require('supertest'); // eslint-disable-line
-const { postPaymentsResponse } = require('../../lib/aspsp-resource-server/payments.js');
+const { postPaymentsResponse, getPaymentsResponse } = require('../../lib/aspsp-resource-server/payments.js');
 const { paymentsMiddleware } = require('../../lib/aspsp-resource-server');
 
 const app = express();
@@ -22,7 +22,7 @@ const requestPayload = {
       },
       CreditorAccount: {
         SchemeName: 'SortCodeAccountNumber',
-        Identification: '08080021325698',
+        Identification: '08080021325698', 
         Name: 'ACME Inc',
         SecondaryIdentification: '0002',
       },
@@ -44,6 +44,19 @@ describe('postPaymentsResponse', () => {
 
     assert.deepEqual(data.Initiation, requestPayload.Data.Initiation);
     assert.deepEqual(response.Risk, risk);
+  });
+});
+
+describe('getPaymentsResponse', () => {
+  it('get response based on PaymentId', () => {
+    const paymentId = '123';
+    const status = 'AcceptedTechnicalValidation';
+    const response = getPaymentsResponse(paymentId, status);
+    const data = response.Data;
+    assert.ok(data.CreationDateTime);
+
+    assert.equal(data.PaymentId, paymentId);
+    assert.equal(data.Status, status);
   });
 });
 

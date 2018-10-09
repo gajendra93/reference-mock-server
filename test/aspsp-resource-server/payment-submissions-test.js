@@ -1,7 +1,7 @@
 const express = require('express');
 const assert = require('assert');
 const request = require('supertest'); // eslint-disable-line
-const { postPaymentSubmissionsResponse } = require('../../lib/aspsp-resource-server/payment-submissions.js');
+const { postPaymentSubmissionsResponse, getPaymentSubmissionsResponse } = require('../../lib/aspsp-resource-server/payment-submissions.js');
 const { paymentSubmissionsMiddleware } = require('../../lib/aspsp-resource-server');
 const { requestPayload } = require('./payments-test.js');
 
@@ -23,6 +23,18 @@ describe('postPaymentsResponse', () => {
 
     assert.equal(data.PaymentSubmissionId, paymentSubmissionId);
     assert.equal(data.PaymentId, paymentId);
+    assert.equal(data.Status, status);
+  });
+});
+
+describe('getPaymentsResponse', () => {
+  it('get response based on PaymentSubmissionId', () => {
+    const status = 'AcceptedSettlementInProcess';
+    const response = getPaymentSubmissionsResponse(paymentSubmissionId, status);
+    const data = response.Data;
+    assert.ok(data.CreationDateTime);
+
+    assert.equal(data.PaymentSubmissionId, paymentSubmissionId);
     assert.equal(data.Status, status);
   });
 });
